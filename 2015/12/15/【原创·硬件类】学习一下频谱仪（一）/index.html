@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1.概述不要太过于深究 我是一个硬件工程师，不是一个测试工程师也不是做频谱仪的工程师，频谱仪只是我的工具，我要知道它的原理，和我相关的我用到的我看到的我能解释能明白就OK！ 频谱仪之于我，无非测频率、看功率、谐波、扩频频谱以及功率、平坦度、相噪、信噪比（载噪比（s+c）/n）、噪声系数等。 2.这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？一个扫频原因，一个中频滤波器原因">
+<meta name="keywords" content="sunguixin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【原创·硬件类】学习一下频谱仪（一）">
+<meta property="og:url" content="http://yoursite.com/2015/12/15/【原创·硬件类】学习一下频谱仪（一）/index.html">
+<meta property="og:site_name" content="孙贵鑫的个人博客">
+<meta property="og:description" content="1.概述不要太过于深究 我是一个硬件工程师，不是一个测试工程师也不是做频谱仪的工程师，频谱仪只是我的工具，我要知道它的原理，和我相关的我用到的我看到的我能解释能明白就OK！ 频谱仪之于我，无非测频率、看功率、谐波、扩频频谱以及功率、平坦度、相噪、信噪比（载噪比（s+c）/n）、噪声系数等。 2.这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？一个扫频原因，一个中频滤波器原因">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pt8w6cmua.bkt.clouddn.com/noise_001.png">
+<meta property="og:updated_time" content="2019-06-16T11:59:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【原创·硬件类】学习一下频谱仪（一）">
+<meta name="twitter:description" content="1.概述不要太过于深究 我是一个硬件工程师，不是一个测试工程师也不是做频谱仪的工程师，频谱仪只是我的工具，我要知道它的原理，和我相关的我用到的我看到的我能解释能明白就OK！ 频谱仪之于我，无非测频率、看功率、谐波、扩频频谱以及功率、平坦度、相噪、信噪比（载噪比（s+c）/n）、噪声系数等。 2.这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？一个扫频原因，一个中频滤波器原因">
+<meta name="twitter:image" content="http://pt8w6cmua.bkt.clouddn.com/noise_001.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2015/12/15/【原创·硬件类】学习一下频谱仪（一）/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>【原创·硬件类】学习一下频谱仪（一） | 孙贵鑫的个人博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">孙贵鑫的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">暗淡轻黄体性柔，情疏迹远只香留。何须浅碧轻红色，自是花中第一流。<br>梅定妒，菊应羞。画阑开处冠中秋。骚人可煞无情思，何事当年不见收。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/12/15/【原创·硬件类】学习一下频谱仪（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunguixin">
+      <meta itemprop="description" content="孙贵鑫的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="孙贵鑫的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【原创·硬件类】学习一下频谱仪（一）
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2015-12-15 21:38:38" itemprop="dateCreated datePublished" datetime="2015-12-15T21:38:38+08:00">2015-12-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-16 19:59:59" itemprop="dateModified" datetime="2019-06-16T19:59:59+08:00">2019-06-16</time>
+              
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h1><p>不要太过于深究</p>
+<p>我是一个硬件工程师，不是一个测试工程师也不是做频谱仪的工程师，频谱仪只是我的工具，我要知道它的原理，和我相关的我用到的我看到的我能解释能明白就OK！</p>
+<p>频谱仪之于我，无非测频率、看功率、谐波、扩频频谱以及功率、平坦度、相噪、信噪比（载噪比（s+c）/n）、噪声系数等。</p>
+<h1 id="2-这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？"><a href="#2-这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？" class="headerlink" title="2.这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？"></a>2.这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？</h1><p>一个扫频原因，一个中频滤波器原因。</p>
+<p>更新：貌似相噪会把能量分散在周围。</p>
+<h1 id="3-关于频谱仪的噪底。"><a href="#3-关于频谱仪的噪底。" class="headerlink" title="3.关于频谱仪的噪底。"></a>3.关于频谱仪的噪底。</h1><p>pn=-174dBm+10log（rbw/1Hz）+NF（理论来看吧，可能比较理想）RBW 100Hz是20dB，300Hz是25dB左右。</p>
+<p>一般信号源输出的噪声有多大？</p>
+<p>这是在安捷伦X系列信号源的一个文档看见的《5991-3131CHCN》。</p>
+<p> <img src="http://pt8w6cmua.bkt.clouddn.com/noise_001.png" alt="信号源输出噪声"></p>
+<h1 id="4-VBW（视频滤波器）到底是什么呢？如何做到信号上的平滑？"><a href="#4-VBW（视频滤波器）到底是什么呢？如何做到信号上的平滑？" class="headerlink" title="4.VBW（视频滤波器）到底是什么呢？如何做到信号上的平滑？"></a>4.VBW（视频滤波器）到底是什么呢？如何做到信号上的平滑？</h1><p>首先要知道检波器过来的信号是什么样的，即视频信号。</p>
+<p>检波器出来是直流+一些小交流。那这样VBW的原貌就很明显了。</p>
+<p>噪声经过检波器会怎样？噪声的包络呗（小直流+一些小交流）</p>
+<h1 id="5-如何精确测量一个小信号，如-70dBm。你真的会吗？识别靠近噪声的信号。"><a href="#5-如何精确测量一个小信号，如-70dBm。你真的会吗？识别靠近噪声的信号。" class="headerlink" title="5.如何精确测量一个小信号，如-70dBm。你真的会吗？识别靠近噪声的信号。"></a>5.如何精确测量一个小信号，如-70dBm。你真的会吗？识别靠近噪声的信号。</h1><p>首先是参考电平适当，RBW小些使得底噪变小，然后VBW平滑噪声，读数稳定。</p>
+<h1 id="6-为啥噪底是斜的？"><a href="#6-为啥噪底是斜的？" class="headerlink" title="6.为啥噪底是斜的？"></a>6.为啥噪底是斜的？</h1><p>电子器件热噪声是白噪声，均匀的，但仪器内部器件对频率响应不同。</p>
+<h1 id="7-热噪声是无法被衰减的，只能被放大。"><a href="#7-热噪声是无法被衰减的，只能被放大。" class="headerlink" title="7.热噪声是无法被衰减的，只能被放大。"></a>7.热噪声是无法被衰减的，只能被放大。</h1><p>只是热噪声不能被衰减，而比热噪声功率大的都能衰减，直到衰减为热噪声的功率值为止，这样理解对吗？</p>
+<p>分好基底噪声、内部噪声、外来噪声和信号。</p>
+<h1 id="8-为什么单个频点-噪声看到的频谱那个频点很好，其它噪声起伏。感觉不像叠加而会淹没。"><a href="#8-为什么单个频点-噪声看到的频谱那个频点很好，其它噪声起伏。感觉不像叠加而会淹没。" class="headerlink" title="8.为什么单个频点+噪声看到的频谱那个频点很好，其它噪声起伏。感觉不像叠加而会淹没。"></a>8.为什么单个频点+噪声看到的频谱那个频点很好，其它噪声起伏。感觉不像叠加而会淹没。</h1><p>首先，是叠加。</p>
+<p>解释这一点需要了解内部原理是有一个对数放大器的，当然，仅从屏幕上看也是知道对数显示的。那么-70dBm摆幅10个dB（约为243uV）和0dBm摆幅10个dBm（约为769mV，243uV在这个位置跟没变一样）是不一样的。</p>
+<h1 id="9-如何测量频谱仪的噪底，即噪声谱密度"><a href="#9-如何测量频谱仪的噪底，即噪声谱密度" class="headerlink" title="9.如何测量频谱仪的噪底，即噪声谱密度?"></a>9.如何测量频谱仪的噪底，即噪声谱密度?</h1><p>这和测量小信号一样。</p>
+<h1 id="10-其他几个待解决问题"><a href="#10-其他几个待解决问题" class="headerlink" title="10.其他几个待解决问题"></a>10.其他几个待解决问题</h1><ul>
+<li><p>如何测量噪声系数？在笔记里有一篇安捷伦的文章写的很好。</p>
+</li>
+<li><p>了解一下相噪。</p>
+</li>
+<li><p>测试信道的功率。或者说测试扩频谱的功率。</p>
+</li>
+<li><p>如何测量平坦度。</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/07/【原创·硬件类】说说ADC（一）/" rel="prev" title="【原创·硬件类】说说ADC（一）">
+                【原创·硬件类】说说ADC（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">sunguixin</p>
+              <div class="site-description motion-element" itemprop="description">孙贵鑫的个人博客</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1.概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？"><span class="nav-number">2.</span> <span class="nav-text">2.这样一个问题，为什么频谱仪看的单载波不是一条竖线，而是一个有宽度的窄带？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-关于频谱仪的噪底。"><span class="nav-number">3.</span> <span class="nav-text">3.关于频谱仪的噪底。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-VBW（视频滤波器）到底是什么呢？如何做到信号上的平滑？"><span class="nav-number">4.</span> <span class="nav-text">4.VBW（视频滤波器）到底是什么呢？如何做到信号上的平滑？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-如何精确测量一个小信号，如-70dBm。你真的会吗？识别靠近噪声的信号。"><span class="nav-number">5.</span> <span class="nav-text">5.如何精确测量一个小信号，如-70dBm。你真的会吗？识别靠近噪声的信号。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-为啥噪底是斜的？"><span class="nav-number">6.</span> <span class="nav-text">6.为啥噪底是斜的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-热噪声是无法被衰减的，只能被放大。"><span class="nav-number">7.</span> <span class="nav-text">7.热噪声是无法被衰减的，只能被放大。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-为什么单个频点-噪声看到的频谱那个频点很好，其它噪声起伏。感觉不像叠加而会淹没。"><span class="nav-number">8.</span> <span class="nav-text">8.为什么单个频点+噪声看到的频谱那个频点很好，其它噪声起伏。感觉不像叠加而会淹没。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-如何测量频谱仪的噪底，即噪声谱密度"><span class="nav-number">9.</span> <span class="nav-text">9.如何测量频谱仪的噪底，即噪声谱密度?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-其他几个待解决问题"><span class="nav-number">10.</span> <span class="nav-text">10.其他几个待解决问题</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sunguixin</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
