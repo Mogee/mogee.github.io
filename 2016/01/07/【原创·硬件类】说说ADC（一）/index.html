@@ -96,18 +96,18 @@
 
 
 
-  <meta name="description" content="1.概述主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端滤波器带宽">
+  <meta name="description" content="1.概述​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端">
 <meta name="keywords" content="sunguixin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【原创·硬件类】说说ADC（一）">
-<meta property="og:url" content="http://yoursite.com/2019/07/01/【原创·硬件类】说说ADC（一）/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/01/07/【原创·硬件类】说说ADC（一）/index.html">
 <meta property="og:site_name" content="孙贵鑫的个人博客">
-<meta property="og:description" content="1.概述主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端滤波器带宽">
+<meta property="og:description" content="1.概述​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-01T13:18:58.440Z">
+<meta property="og:updated_time" content="2019-07-01T13:28:45.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【原创·硬件类】说说ADC（一）">
-<meta name="twitter:description" content="1.概述主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端滤波器带宽">
+<meta name="twitter:description" content="1.概述​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/07/01/【原创·硬件类】说说ADC（一）/">
+  <link rel="canonical" href="http://yoursite.com/2016/01/07/【原创·硬件类】说说ADC（一）/">
 
 
 
@@ -294,7 +294,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/01/【原创·硬件类】说说ADC（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/07/【原创·硬件类】说说ADC（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sunguixin">
@@ -337,12 +337,24 @@
                 
               
 
-              <time title="创建时间：2019-07-01 20:50:19 / 修改时间：21:18:58" itemprop="dateCreated datePublished" datetime="2019-07-01T20:50:19+08:00">2019-07-01</time>
+              <time title="创建时间：2016-01-07 20:50:19" itemprop="dateCreated datePublished" datetime="2016-01-07T20:50:19+08:00">2016-01-07</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-01 21:28:45" itemprop="dateModified" datetime="2019-07-01T21:28:45+08:00">2019-07-01</time>
               
             
           </span>
@@ -373,7 +385,7 @@
       
 
       
-        <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h1><p>主要学习一下ADC一些性能参数： 噪底、信噪比SNR。</p>
+        <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h1><p>​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。</p>
 <h1 id="2-理解理想SNR和实际SNR。"><a href="#2-理解理想SNR和实际SNR。" class="headerlink" title="2.理解理想SNR和实际SNR。"></a>2.理解理想SNR和实际SNR。</h1><ul>
 <li><p>如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。</p>
 </li>
@@ -403,7 +415,7 @@
 <ul>
 <li>信噪比SNR载噪比CNR和载噪密度比CN0R：—-N是噪声功率，N0是噪声谱密度 —-并没有什么关系，用时对应起来就行，比如你用频谱仪看的是CN0R，那采样计算时也算CN0R。我看AD性能就看SNR。频谱仪的话可以看带内这样算。</li>
 </ul>
-<h1 id="5-改善SNR"><a href="#5-改善SNR" class="headerlink" title="5.改善SNR"></a>5.改善SNR</h1><p>可以通过数字滤波改善SNR，所以这个参数并没有太多的意义，用来看看有效位数吧，主要还是噪底和谐波，这两个搞定了，SNR都可以提升。 噪底的问题看一下滤波器这块吧，把其他频段的滤掉应该会好很多，谐波要先看谐波是哪来的，前面是变压器，会有偶次谐波失真，滤波器应该也能解决掉。</p>
+<h1 id="5-改善SNR"><a href="#5-改善SNR" class="headerlink" title="5.改善SNR"></a>5.改善SNR</h1><p>​    可以通过数字滤波改善SNR，所以这个参数并没有太多的意义，用来看看有效位数吧，主要还是噪底和谐波，这两个搞定了，SNR都可以提升。 噪底的问题看一下滤波器这块吧，把其他频段的滤掉应该会好很多，谐波要先看谐波是哪来的，前面是变压器，会有偶次谐波失真，滤波器应该也能解决掉。</p>
 <h1 id="6-提几个个问题？"><a href="#6-提几个个问题？" class="headerlink" title="6.提几个个问题？"></a>6.提几个个问题？</h1><ul>
 <li><p>如果没有频率限制，第一奈奎斯特带宽内的噪声会无穷大吗？</p>
 </li>
@@ -442,15 +454,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/16/博客简介/" rel="next" title="博客简介">
-                <i class="fa fa-chevron-left"></i> 博客简介
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/27/【原创·硬件类】关于PADS封装检查/" rel="prev" title="【原创·硬件类】关于PADS封装检查">
+                【原创·硬件类】关于PADS封装检查 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -515,7 +527,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
