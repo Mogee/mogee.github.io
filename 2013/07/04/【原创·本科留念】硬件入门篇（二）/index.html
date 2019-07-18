@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -104,12 +104,13 @@
 <meta property="og:site_name" content="孙贵鑫的个人博客">
 <meta property="og:description" content="单片机入门​    单片机是一种集成电路芯片，是采用超大规模集成电路技术把具有数据处理能力的中央处理器CPU随机存储器RAM、只读存储器ROM、多种I/O口和中断系统、定时器/计时器等功能。可以说是“麻雀虽小，五脏俱全”。 ​    本次焊接的单片机最小系统板包含单片机芯片89LV51RD2 、HD7279A(键盘PHY)、lcd16032(lcd显示屏)，并预留了SPI通信端口。 实验板组成框图">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://pt8w6cmua.bkt.clouddn.com/mcu_hd7279a.PNG">
+<meta property="og:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/mcu_hd7279a.png">
+<meta property="og:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/qc1602a_pin.png">
 <meta property="og:updated_time" content="2019-06-16T11:59:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【原创·本科留念】硬件入门篇（二）">
 <meta name="twitter:description" content="单片机入门​    单片机是一种集成电路芯片，是采用超大规模集成电路技术把具有数据处理能力的中央处理器CPU随机存储器RAM、只读存储器ROM、多种I/O口和中断系统、定时器/计时器等功能。可以说是“麻雀虽小，五脏俱全”。 ​    本次焊接的单片机最小系统板包含单片机芯片89LV51RD2 、HD7279A(键盘PHY)、lcd16032(lcd显示屏)，并预留了SPI通信端口。 实验板组成框图">
-<meta name="twitter:image" content="http://pt8w6cmua.bkt.clouddn.com/mcu_hd7279a.PNG">
+<meta name="twitter:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/mcu_hd7279a.png">
 
 
 
@@ -389,7 +390,7 @@
       
         <h1 id="单片机入门"><a href="#单片机入门" class="headerlink" title="单片机入门"></a>单片机入门</h1><p>​    单片机是一种集成电路芯片，是采用超大规模集成电路技术把具有数据处理能力的中央处理器CPU随机存储器RAM、只读存储器ROM、多种I/O口和中断系统、定时器/计时器等功能。可以说是“麻雀虽小，五脏俱全”。</p>
 <p>​    本次焊接的单片机最小系统板包含单片机芯片89LV51RD2 、HD7279A(键盘PHY)、lcd16032(lcd显示屏)，并预留了SPI通信端口。</p>
-<h1 id="实验板组成框图"><a href="#实验板组成框图" class="headerlink" title="实验板组成框图"></a>实验板组成框图</h1><p><img src="http://pt8w6cmua.bkt.clouddn.com/mcu_hd7279a.PNG" alt="实验板组成框图"></p>
+<h1 id="实验板组成框图"><a href="#实验板组成框图" class="headerlink" title="实验板组成框图"></a>实验板组成框图</h1><p><img src="/2013/07/04/【原创·本科留念】硬件入门篇（二）/mcu_hd7279a.png" alt="实验板组成框图"></p>
 <h1 id="实验板焊接"><a href="#实验板焊接" class="headerlink" title="实验板焊接"></a>实验板焊接</h1><p>​    单片机的焊接相对来说容易一些，掌握了基本焊接方法便可成功完成。可参见【原创·本科留念】硬件入门篇（一）部分。</p>
 <h1 id="实验板测试"><a href="#实验板测试" class="headerlink" title="实验板测试"></a>实验板测试</h1><h2 id="单片机芯片测试"><a href="#单片机芯片测试" class="headerlink" title="单片机芯片测试"></a>单片机芯片测试</h2><p>​    在单片机中下如测试指令，然后在相应管脚用示波器测试波形与测试指令对比。</p>
 <p>​    测试代码如下：</p>
@@ -404,25 +405,35 @@
 <tr>
 <th align="center">D7</th>
 <th align="center">D6</th>
-<th>D5</th>
-<th>D4</th>
-<th>D3</th>
-<th>D2</th>
-<th>D1</th>
-<th>D0</th>
+<th align="center">D5</th>
+<th align="center">D4</th>
+<th align="center">D3</th>
+<th align="center">D2</th>
+<th align="center">D1</th>
+<th align="center">D0</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"></td>
-<td align="center"></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
 </tr>
 </tbody></table>
+<p>​    该指令使所有的LED灯全部点亮，并处于闪烁状态，主要用于测试。</p>
+<p>​    然后编写代码进行测试，关键代码如下：</p>
+<p>​    <code>main(){</code></p>
+<p>​         <code>send_byte(CMD_RESET);</code>  </p>
+<p>​         <code>send_byte(CMD_TEST);</code>  </p>
+<p>​        <code>for(j=0;j&lt;1;j++)</code> </p>
+<p>​             <code>{ delay10ms(100); }</code> </p>
+<p>​    <code>}</code></p>
+<p>​    测试：如果led灯闪烁，则表明HD7279A接收指令正常。若Led灯无反应，用示波器测量data线上信号，没有波形则查询手册检查并调试程序是否正确。</p>
+<h2 id="QC1602A-测试"><a href="#QC1602A-测试" class="headerlink" title="QC1602A 测试"></a>QC1602A 测试</h2><p><img src="/2013/07/04/【原创·本科留念】硬件入门篇（二）/qc1602a_pin.png" alt="LCD1602A管脚图"></p>
 
       
     </div>
@@ -572,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单片机入门"><span class="nav-number">1.</span> <span class="nav-text">单片机入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板组成框图"><span class="nav-number">2.</span> <span class="nav-text">实验板组成框图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板焊接"><span class="nav-number">3.</span> <span class="nav-text">实验板焊接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板测试"><span class="nav-number">4.</span> <span class="nav-text">实验板测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单片机芯片测试"><span class="nav-number">4.1.</span> <span class="nav-text">单片机芯片测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HD7279A芯片的测试"><span class="nav-number">4.2.</span> <span class="nav-text">HD7279A芯片的测试</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单片机入门"><span class="nav-number">1.</span> <span class="nav-text">单片机入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板组成框图"><span class="nav-number">2.</span> <span class="nav-text">实验板组成框图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板焊接"><span class="nav-number">3.</span> <span class="nav-text">实验板焊接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板测试"><span class="nav-number">4.</span> <span class="nav-text">实验板测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单片机芯片测试"><span class="nav-number">4.1.</span> <span class="nav-text">单片机芯片测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HD7279A芯片的测试"><span class="nav-number">4.2.</span> <span class="nav-text">HD7279A芯片的测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QC1602A-测试"><span class="nav-number">4.3.</span> <span class="nav-text">QC1602A 测试</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -605,7 +616,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
 
 
 
