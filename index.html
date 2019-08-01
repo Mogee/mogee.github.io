@@ -1396,6 +1396,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sunguixin">
+      <meta itemprop="description" content="孙贵鑫的个人博客">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="孙贵鑫的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2013/08/01/【原创·本科留念】硬件入门篇（三）/" class="post-title-link" itemprop="url">【原创·本科留念】硬件入门篇（三）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2013-08-01 20:53:29" itemprop="dateCreated datePublished" datetime="2013-08-01T20:53:29+08:00">2013-08-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-01 20:59:59" itemprop="dateModified" datetime="2019-08-01T20:59:59+08:00">2019-08-01</time>
+              
+            
+          </span>
+
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="FPGA入门"><a href="#FPGA入门" class="headerlink" title="FPGA入门"></a>FPGA入门</h1><p>​     FPGA（Field－Programmable Gate Array），即现场可编程门阵列，它是在PAL、GAL、CPLD等可编程器件的基础上进一步发展的产物。它是作为专用集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，又克服了原有可编程器件门电路数有限的缺点。</p>
+<p>​    本次主要学习FPGA，熟悉了解Quartus开发环境，SignalTap使用，管脚配置和编程下载，matlab相关了解和一些dsp知识的复习，Verilog学习，另外也做了单片机串口通信。</p>
+<h1 id="Verilog基本编程总结"><a href="#Verilog基本编程总结" class="headerlink" title="Verilog基本编程总结"></a>Verilog基本编程总结</h1><p>学习Verilog，当然要知道RTL的重要性。在设计电路时，先想清楚电路的结构，然后再做设计。以下是我对Verilog编写程序的总结：</p>
+<p>1)画出电路的RTL图，定义好module的输入输出端口</p>
+<p>2)定义基本参数parameter</p>
+<p>3)使用initial块初始化</p>
+<p>4)确定组合逻辑与时序逻辑always块和敏感信号列表</p>
+<p>5)注意阻塞和非阻塞的内容，编写if..else..注意完整性</p>
+<p>6)区分wire和reg的类型使用，实例化时候引出的是线</p>
+<p>7)设计程序的完整性，确认完整的设计不构成数据不必要的锁存器结构</p>
+<h1 id="基于FPGA的数字计时器"><a href="#基于FPGA的数字计时器" class="headerlink" title="基于FPGA的数字计时器"></a>基于FPGA的数字计时器</h1><p><img src="/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5CRTL_design.png" alt="RTL设计"></p>
+<p>​    按键去抖：</p>
+<p>​        按键去抖原理：使用计数器，计数器每隔20毫秒会达到最大值然后溢出，在计数器达到溢出值的 8/8， 7/8, 6/8, 0/8 时刻对按键的值进行采样，如果全部采样值相同则说明</p>
+<p>​    没有抖动发生输出采样值，否则认为发生了抖动，输出值保持不变。</p>
+<h1 id="DDS模块"><a href="#DDS模块" class="headerlink" title="DDS模块"></a>DDS模块</h1><h2 id="公式导引"><a href="#公式导引" class="headerlink" title="公式导引"></a>公式导引</h2><p>​     
+$$<br>S(t)=sin⁡( 2πf_0) -(1)<br>$$<br>​    对(1)信号以采样周期Tc采样，则得到的离散序列：<br>$$<br>S(n)=sin(2π f_0 n T_c),n=0,1,2,3,4…-(2)<br>$$<br>​    所以相邻采样点的相位差：<br>$$<br>Δθ=2πf_0 T_c=2πf_0/f_c-(3)<br>$$<br>   根据奈奎斯特抽样频率fc&gt;2f0，由式(3) 得：<br>$$<br>f_0=Δθ/2πT_c-(4)<br>$$<br>   一个周期   分成M份（M = 2^N）, 可知决定输出频率的是两次采样之间的相位增量，因此，只要控制相位增量，就可以控制信号的频率。</p>
+<p>​    输出信号频率：<br>$$<br>f_0=Δθ·K/(2πf_c)=K/M·f_c=K/2^N·f_c<br>$$<br>​    所以最大频率：<br>$$<br>f_0=1/2 f_c<br>$$<br>​    最小频率：<br>$$<br>f_0=1/2^N  f_c<br>$$</p>
+<h2 id="图像详解DDS实现过程"><a href="#图像详解DDS实现过程" class="headerlink" title="图像详解DDS实现过程"></a>图像详解DDS实现过程</h2><p>​    在取地址的时，实现方法是相位截图，频率字位数大，但是提高了频率分辨力和精度，相位截取在另一方面也带来了DDS频率谱的杂散。</p>
+<p>​    正弦信号采用matlab生成存储。</p>
+<p>​    <img src="/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5Cdds_01.png" alt="RTL设计"></p>
+<p>​     <img src="/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5Cdds_02.png" alt="RTL设计"></p>
+<h2 id="3-3-DDS优缺点"><a href="#3-3-DDS优缺点" class="headerlink" title="3.3  DDS优缺点"></a>3.3  DDS优缺点</h2><p>​    DDS(Direct Digital  Frequency Synthesizer)直接数字频率合成器,也可叫DDFS。 </p>
+<p>​    优点：</p>
+<p>​    • 频率分辨率高，可达2的N次。 </p>
+<p>​    • 频率切换速度快，可达us量级。 </p>
+<p>​    • 频率切换时相位连续。 </p>
+<p>​    • 可以产生任意波形。 </p>
+<p>​    缺点：</p>
+<p>​    • 输出频带范围有限。</p>
+<p>​    • 输出杂散大。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1851,7 +2032,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

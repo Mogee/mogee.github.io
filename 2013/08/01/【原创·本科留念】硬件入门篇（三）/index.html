@@ -96,18 +96,22 @@
 
 
 
-  <meta name="description" content="1.概述​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端">
+  <meta name="description" content="FPGA入门​     FPGA（Field－Programmable Gate Array），即现场可编程门阵列，它是在PAL、GAL、CPLD等可编程器件的基础上进一步发展的产物。它是作为专用集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，又克服了原有可编程器件门电路数有限的缺点。 ​    本次主要学习FPGA，熟悉了解Quartus开发环境，SignalTap使">
 <meta name="keywords" content="sunguixin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【原创·硬件类】说说ADC（一）">
-<meta property="og:url" content="http://yoursite.com/2016/01/07/【原创·硬件类】说说ADC（一）/index.html">
+<meta property="og:title" content="【原创·本科留念】硬件入门篇（三）">
+<meta property="og:url" content="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/index.html">
 <meta property="og:site_name" content="孙贵鑫的个人博客">
-<meta property="og:description" content="1.概述​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端">
+<meta property="og:description" content="FPGA入门​     FPGA（Field－Programmable Gate Array），即现场可编程门阵列，它是在PAL、GAL、CPLD等可编程器件的基础上进一步发展的产物。它是作为专用集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，又克服了原有可编程器件门电路数有限的缺点。 ​    本次主要学习FPGA，熟悉了解Quartus开发环境，SignalTap使">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-22T00:22:24.000Z">
+<meta property="og:image" content="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5CRTL_design.png">
+<meta property="og:image" content="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5Cdds_01.png">
+<meta property="og:image" content="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5Cdds_02.png">
+<meta property="og:updated_time" content="2019-08-01T12:59:59.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【原创·硬件类】说说ADC（一）">
-<meta name="twitter:description" content="1.概述​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。 2.理解理想SNR和实际SNR。 如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。  实际SNR：直线+量化噪声+实际噪声。  关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端">
+<meta name="twitter:title" content="【原创·本科留念】硬件入门篇（三）">
+<meta name="twitter:description" content="FPGA入门​     FPGA（Field－Programmable Gate Array），即现场可编程门阵列，它是在PAL、GAL、CPLD等可编程器件的基础上进一步发展的产物。它是作为专用集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，又克服了原有可编程器件门电路数有限的缺点。 ​    本次主要学习FPGA，熟悉了解Quartus开发环境，SignalTap使">
+<meta name="twitter:image" content="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5CRTL_design.png">
 
 
 
@@ -115,7 +119,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2016/01/07/【原创·硬件类】说说ADC（一）/">
+  <link rel="canonical" href="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/">
 
 
 
@@ -125,7 +129,7 @@
   };
 </script>
 
-  <title>【原创·硬件类】说说ADC（一） | 孙贵鑫的个人博客</title>
+  <title>【原创·本科留念】硬件入门篇（三） | 孙贵鑫的个人博客</title>
   
 
 
@@ -294,7 +298,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/07/【原创·硬件类】说说ADC（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/08/01/【原创·本科留念】硬件入门篇（三）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="sunguixin">
@@ -311,7 +315,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">【原创·硬件类】说说ADC（一）
+          <h1 class="post-title" itemprop="name headline">【原创·本科留念】硬件入门篇（三）
 
               
             
@@ -337,7 +341,7 @@
                 
               
 
-              <time title="创建时间：2016-01-07 22:30:25" itemprop="dateCreated datePublished" datetime="2016-01-07T22:30:25+08:00">2016-01-07</time>
+              <time title="创建时间：2013-08-01 20:53:29" itemprop="dateCreated datePublished" datetime="2013-08-01T20:53:29+08:00">2013-08-01</time>
             
 
             
@@ -354,7 +358,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-22 08:22:24" itemprop="dateModified" datetime="2019-06-22T08:22:24+08:00">2019-06-22</time>
+                <time title="修改时间：2019-08-01 20:59:59" itemprop="dateModified" datetime="2019-08-01T20:59:59+08:00">2019-08-01</time>
               
             
           </span>
@@ -385,45 +389,36 @@
       
 
       
-        <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h1><p>​    主要学习一下ADC一些性能参数： 噪底、信噪比SNR。</p>
-<h1 id="2-理解理想SNR和实际SNR。"><a href="#2-理解理想SNR和实际SNR。" class="headerlink" title="2.理解理想SNR和实际SNR。"></a>2.理解理想SNR和实际SNR。</h1><ul>
-<li><p>如何理解量化噪声呢？梯形波可以看作直线+噪声（量化噪声）。</p>
-</li>
-<li><p>实际SNR：直线+量化噪声+实际噪声。</p>
-</li>
-<li><p>关于SNR的带宽：–量化噪声几乎均匀分布在DC～Nyquist（包括高阶谐波混叠），均方根为（q/根号12）。量化噪声由器件量化造成，与外部AD前端滤波器带宽无关。 –实际噪声：看AD前端滤波器带宽吧，当然也有混叠，滤波器滤掉后基本混进来的很小。可以看成就是滤波器带内的噪声。</p>
-</li>
-</ul>
-<h1 id="3-理想SNR的理想噪底"><a href="#3-理想SNR的理想噪底" class="headerlink" title="3.理想SNR的理想噪底"></a>3.理想SNR的理想噪底</h1><ul>
-<li><p>即加一个处理增益。 区别不同时刻所描述的噪底。</p>
-</li>
-<li><p>理想SNR的噪底，跟FFT有关，也决定你能看到的最低的底噪。所以在看手册时也要注意手册给的FFT图的参数，即FFT的分辨率带宽（暂时这么叫吧），fs/M。那么处理增益为10log（M/2）。具体查资料吧。</p>
-</li>
-</ul>
-<ul>
-<li>实际SNR的噪底。两个噪底看谁大呗。同样由FFT决定。</li>
-</ul>
-<ul>
-<li>如果用的采样频率不同，信噪比会不一样吗?FFT的噪底会不一样吗（点数相同）？ —-看手册吧，一般会给不同采样率下，理想状态应该是一样的，实际会有不同，但是不会差很多。以手册为参考。</li>
-</ul>
-<h1 id="4-关于SNR中信号和噪声的单位问题。"><a href="#4-关于SNR中信号和噪声的单位问题。" class="headerlink" title="4.关于SNR中信号和噪声的单位问题。"></a>4.关于SNR中信号和噪声的单位问题。</h1><ul>
-<li>先按量化噪声来看，是指DC～Nyquist内的信号功率和和噪声功率和。FFT都是分辨率带宽内的总功率和。这样就能说的通。也就是说频谱仪以及数字FFT读出来的是分辨率带宽内的信号总功率/噪声总功率（信噪比）。</li>
-</ul>
-<ul>
-<li>算载噪比时是信号，要再加一个带宽，算下来就是载噪比是信号功率/噪声功率谱密度。有点懂了。载噪比是dBHz。所以是噪声谱密度。 或者更准确的说这种是载噪密度比。</li>
-</ul>
-<ul>
-<li>信噪比SNR载噪比CNR和载噪密度比CN0R：—-N是噪声功率，N0是噪声谱密度 —-并没有什么关系，用时对应起来就行，比如你用频谱仪看的是CN0R，那采样计算时也算CN0R。我看AD性能就看SNR。频谱仪的话可以看带内这样算。</li>
-</ul>
-<h1 id="5-改善SNR"><a href="#5-改善SNR" class="headerlink" title="5.改善SNR"></a>5.改善SNR</h1><p>​    可以通过数字滤波改善SNR，所以这个参数并没有太多的意义，用来看看有效位数吧，主要还是噪底和谐波，这两个搞定了，SNR都可以提升。 噪底的问题看一下滤波器这块吧，把其他频段的滤掉应该会好很多，谐波要先看谐波是哪来的，前面是变压器，会有偶次谐波失真，滤波器应该也能解决掉。</p>
-<h1 id="6-提几个个问题？"><a href="#6-提几个个问题？" class="headerlink" title="6.提几个个问题？"></a>6.提几个个问题？</h1><ul>
-<li><p>如果没有频率限制，第一奈奎斯特带宽内的噪声会无穷大吗？</p>
-</li>
-<li><p>实际算信噪比是先算第一奈奎斯特内的功率然后再加上实际带宽的处理增益还是直接计算实际带宽的功率？</p>
-</li>
-<li><p>信噪比到底用来干什么的？</p>
-</li>
-</ul>
+        <h1 id="FPGA入门"><a href="#FPGA入门" class="headerlink" title="FPGA入门"></a>FPGA入门</h1><p>​     FPGA（Field－Programmable Gate Array），即现场可编程门阵列，它是在PAL、GAL、CPLD等可编程器件的基础上进一步发展的产物。它是作为专用集成电路（ASIC）领域中的一种半定制电路而出现的，既解决了定制电路的不足，又克服了原有可编程器件门电路数有限的缺点。</p>
+<p>​    本次主要学习FPGA，熟悉了解Quartus开发环境，SignalTap使用，管脚配置和编程下载，matlab相关了解和一些dsp知识的复习，Verilog学习，另外也做了单片机串口通信。</p>
+<h1 id="Verilog基本编程总结"><a href="#Verilog基本编程总结" class="headerlink" title="Verilog基本编程总结"></a>Verilog基本编程总结</h1><p>学习Verilog，当然要知道RTL的重要性。在设计电路时，先想清楚电路的结构，然后再做设计。以下是我对Verilog编写程序的总结：</p>
+<p>1)画出电路的RTL图，定义好module的输入输出端口</p>
+<p>2)定义基本参数parameter</p>
+<p>3)使用initial块初始化</p>
+<p>4)确定组合逻辑与时序逻辑always块和敏感信号列表</p>
+<p>5)注意阻塞和非阻塞的内容，编写if..else..注意完整性</p>
+<p>6)区分wire和reg的类型使用，实例化时候引出的是线</p>
+<p>7)设计程序的完整性，确认完整的设计不构成数据不必要的锁存器结构</p>
+<h1 id="基于FPGA的数字计时器"><a href="#基于FPGA的数字计时器" class="headerlink" title="基于FPGA的数字计时器"></a>基于FPGA的数字计时器</h1><p><img src="/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5CRTL_design.png" alt="RTL设计"></p>
+<p>​    按键去抖：</p>
+<p>​        按键去抖原理：使用计数器，计数器每隔20毫秒会达到最大值然后溢出，在计数器达到溢出值的 8/8， 7/8, 6/8, 0/8 时刻对按键的值进行采样，如果全部采样值相同则说明</p>
+<p>​    没有抖动发生输出采样值，否则认为发生了抖动，输出值保持不变。</p>
+<h1 id="DDS模块"><a href="#DDS模块" class="headerlink" title="DDS模块"></a>DDS模块</h1><h2 id="公式导引"><a href="#公式导引" class="headerlink" title="公式导引"></a>公式导引</h2><p>​     
+$$<br>S(t)=sin⁡( 2πf_0) -(1)<br>$$<br>​    对(1)信号以采样周期Tc采样，则得到的离散序列：<br>$$<br>S(n)=sin(2π f_0 n T_c),n=0,1,2,3,4…-(2)<br>$$<br>​    所以相邻采样点的相位差：<br>$$<br>Δθ=2πf_0 T_c=2πf_0/f_c-(3)<br>$$<br>   根据奈奎斯特抽样频率fc&gt;2f0，由式(3) 得：<br>$$<br>f_0=Δθ/2πT_c-(4)<br>$$<br>   一个周期   分成M份（M = 2^N）, 可知决定输出频率的是两次采样之间的相位增量，因此，只要控制相位增量，就可以控制信号的频率。</p>
+<p>​    输出信号频率：<br>$$<br>f_0=Δθ·K/(2πf_c)=K/M·f_c=K/2^N·f_c<br>$$<br>​    所以最大频率：<br>$$<br>f_0=1/2 f_c<br>$$<br>​    最小频率：<br>$$<br>f_0=1/2^N  f_c<br>$$</p>
+<h2 id="图像详解DDS实现过程"><a href="#图像详解DDS实现过程" class="headerlink" title="图像详解DDS实现过程"></a>图像详解DDS实现过程</h2><p>​    在取地址的时，实现方法是相位截图，频率字位数大，但是提高了频率分辨力和精度，相位截取在另一方面也带来了DDS频率谱的杂散。</p>
+<p>​    正弦信号采用matlab生成存储。</p>
+<p>​    <img src="/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5Cdds_01.png" alt="RTL设计"></p>
+<p>​     <img src="/2013/08/01/【原创·本科留念】硬件入门篇（三）/2019-08-01-%E3%80%90%E5%8E%9F%E5%88%9B%C2%B7%E6%9C%AC%E7%A7%91%E7%95%99%E5%BF%B5%E3%80%91%E7%A1%AC%E4%BB%B6%E5%85%A5%E9%97%A8%E7%AF%87%EF%BC%88%E4%B8%89%EF%BC%89%5Cdds_02.png" alt="RTL设计"></p>
+<h2 id="3-3-DDS优缺点"><a href="#3-3-DDS优缺点" class="headerlink" title="3.3  DDS优缺点"></a>3.3  DDS优缺点</h2><p>​    DDS(Direct Digital  Frequency Synthesizer)直接数字频率合成器,也可叫DDFS。 </p>
+<p>​    优点：</p>
+<p>​    • 频率分辨率高，可达2的N次。 </p>
+<p>​    • 频率切换速度快，可达us量级。 </p>
+<p>​    • 频率切换时相位连续。 </p>
+<p>​    • 可以产生任意波形。 </p>
+<p>​    缺点：</p>
+<p>​    • 输出频带范围有限。</p>
+<p>​    • 输出杂散大。</p>
 
       
     </div>
@@ -454,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/15/【原创·硬件类】学习一下频谱仪（一）/" rel="next" title="【原创·硬件类】学习一下频谱仪（一）">
-                <i class="fa fa-chevron-left"></i> 【原创·硬件类】学习一下频谱仪（一）
+              <a href="/2013/07/04/【原创·本科留念】硬件入门篇（二）/" rel="next" title="【原创·本科留念】硬件入门篇（二）">
+                <i class="fa fa-chevron-left"></i> 【原创·本科留念】硬件入门篇（二）
               </a>
             
           </div>
@@ -464,8 +459,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/05/27/【原创·硬件类】关于PADS封装检查/" rel="prev" title="【原创·硬件类】关于PADS封装检查">
-                【原创·硬件类】关于PADS封装检查 <i class="fa fa-chevron-right"></i>
+              <a href="/2015/12/15/【原创·硬件类】学习一下频谱仪（一）/" rel="prev" title="【原创·硬件类】学习一下频谱仪（一）">
+                【原创·硬件类】学习一下频谱仪（一） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -573,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1.概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-理解理想SNR和实际SNR。"><span class="nav-number">2.</span> <span class="nav-text">2.理解理想SNR和实际SNR。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-理想SNR的理想噪底"><span class="nav-number">3.</span> <span class="nav-text">3.理想SNR的理想噪底</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-关于SNR中信号和噪声的单位问题。"><span class="nav-number">4.</span> <span class="nav-text">4.关于SNR中信号和噪声的单位问题。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-改善SNR"><span class="nav-number">5.</span> <span class="nav-text">5.改善SNR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-提几个个问题？"><span class="nav-number">6.</span> <span class="nav-text">6.提几个个问题？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FPGA入门"><span class="nav-number">1.</span> <span class="nav-text">FPGA入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Verilog基本编程总结"><span class="nav-number">2.</span> <span class="nav-text">Verilog基本编程总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于FPGA的数字计时器"><span class="nav-number">3.</span> <span class="nav-text">基于FPGA的数字计时器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DDS模块"><span class="nav-number">4.</span> <span class="nav-text">DDS模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#公式导引"><span class="nav-number">4.1.</span> <span class="nav-text">公式导引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像详解DDS实现过程"><span class="nav-number">4.2.</span> <span class="nav-text">图像详解DDS实现过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-DDS优缺点"><span class="nav-number">4.3.</span> <span class="nav-text">3.3  DDS优缺点</span></a></li></ol></li></ol></div>
             
 
           </div>
