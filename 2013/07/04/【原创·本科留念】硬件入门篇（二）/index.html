@@ -106,6 +106,9 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/hd7279a_mcu.png">
 <meta property="og:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/qc1602a_pin.png">
+<meta property="og:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/qc1602a_fp.png">
+<meta property="og:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/jianpanhao.png">
+<meta property="og:image" content="http://yoursite.com/2013/07/04/【原创·本科留念】硬件入门篇（二）/jianpan_cmd.jpg">
 <meta property="og:updated_time" content="2019-06-16T11:59:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【原创·本科留念】硬件入门篇（二）">
@@ -434,6 +437,63 @@
 <p>​    <code>}</code></p>
 <p>​    测试：如果led灯闪烁，则表明HD7279A接收指令正常。若Led灯无反应，用示波器测量data线上信号，没有波形则查询手册检查并调试程序是否正确。</p>
 <h2 id="QC1602A-测试"><a href="#QC1602A-测试" class="headerlink" title="QC1602A 测试"></a>QC1602A 测试</h2><p><img src="/2013/07/04/【原创·本科留念】硬件入门篇（二）/qc1602a_pin.png" alt="LCD1602A管脚图"></p>
+<p><img src="/2013/07/04/【原创·本科留念】硬件入门篇（二）/qc1602a_fp.png" alt="LCD1602A管脚图"></p>
+<p>​    <code>//写指令</code></p>
+<p>​    <code>Voidwrite_com(uchar com )</code></p>
+<p>​    <code>{</code></p>
+<p>​    <code>P2=com;//数据给P0口</code></p>
+<p>​    <code>rs=0;//写指令</code></p>
+<p>​    <code>lcdRw=0;</code></p>
+<p>​    <code>//RW为0，始终处于可写状态</code></p>
+<p>​    <code>lcden=1;</code></p>
+<p>​    <code>delay(5);</code></p>
+<p>​    <code>lcden=0;//使能为零</code></p>
+<p>​    <code>}</code></p>
+<p>​    <code>//写数据</code></p>
+<p>​    <code>Voidwrite_dat(uchardat)</code></p>
+<p>​    <code>{</code></p>
+<p>​    <code>P2=dat;//数据给P0口</code></p>
+<p>​    <code>rs=1;//</code></p>
+<p>​    <code>lcdRw=0;</code></p>
+<p>​    <code>//RW为0，始终处于可写状态</code></p>
+<p>​    <code>lcden=1;</code></p>
+<p>​    <code>delay(5);</code></p>
+<p>​    <code>lcden=0;//使能为零</code></p>
+<p>​    <code>}</code></p>
+<p>​    调试的时候，液晶程序没有错误的情况下，屏幕没有输出显示的时候，经过多次的测量，最后问题出在了电位器上。调节出屏幕的对比度即可。</p>
+<h2 id="HD7279A芯片键盘按键测试"><a href="#HD7279A芯片键盘按键测试" class="headerlink" title="HD7279A芯片键盘按键测试"></a>HD7279A芯片键盘按键测试</h2><p>​    由数据手册查的有按键按下时，HD7279A的key由高变低。并保持到结束。</p>
+<p>​    测试方法：这里要注意HD7279A的key管脚并没有与MCU相连，需要人工连接上。然后在MCU中写入接收key键低电平响应，观察结果。</p>
+<p>​    关键代码：</p>
+<p>​    <code>main(){</code></p>
+<p>​        <code>while(1){</code></p>
+<p>​            <code>if(!key){</code></p>
+<p>​            <code>write_com(0x80);</code></p>
+<p>​            <code>write_dat(table1[0])</code></p>
+<p>​            <code>}</code></p>
+<p>​        <code>}</code></p>
+<p>​    <code>}</code></p>
+<p>​    测试：单片机复位后，按下任意按键，观察屏幕。若出现相应字符，表明正确。否则，用示波器测量key管教，当按键按下时，若信号有高变低，则表明key键有效。然后检查并调试代码即可。</p>
+<h2 id="接收HD7279A键码值"><a href="#接收HD7279A键码值" class="headerlink" title="接收HD7279A键码值"></a>接收HD7279A键码值</h2><h3 id="建立键值码表"><a href="#建立键值码表" class="headerlink" title="建立键值码表"></a>建立键值码表</h3><p>​    HD7279A共有8x8个按键，键码值范围为0~0x3F(无效返回时为0xFF)，通过原理图找到本实验板4x4按键所用的键码号分别为：</p>
+<p><img src="/2013/07/04/【原创·本科留念】硬件入门篇（二）/jianpanhao.png" alt="LCD1602A管脚图"></p>
+<p>​    <code>uchartable_key_val[]=&quot;ABCD0123456789*#&quot;;</code></p>
+<p>​    <code>uchartable_key[]={7,6,5,0,16,31,23,15,30,22,14,29,21,13,24,8};</code></p>
+<h3 id="接收数据测试"><a href="#接收数据测试" class="headerlink" title="接收数据测试"></a>接收数据测试</h3><p><img src="/2013/07/04/【原创·本科留念】硬件入门篇（二）/jianpan_cmd.jpg" alt="LCD1602A管脚图"></p>
+<p>​    原理：读取键码时，首先单片机要收到有效按键key，然后发送读取数据指令，共8位，需要8个时钟脉冲，HD7279A在按键有效期间(及按键松开前)收到此指令，在第9个时钟上升沿是dat管脚由输入变为输出，发送给MCU8位数据。所以完成此功能共16位。</p>
+<p>​    关键代码：</p>
+<p>​    <code>main(){</code></p>
+<p>​    <code>while(1){</code></p>
+<p>​        <code>if (!key){</code></p>
+<p>​            <code>for(a=0;a&lt;16;a++){</code></p>
+<p>​                <code>in_byte=read7279(CMD_READ);</code></p>
+<p>​                <code>if(in_byte==table_key[a]){</code></p>
+<p>​                    <code>write_com(0x80);</code></p>
+<p>​                    <code>write_dat(table_key_val[a]) ;</code></p>
+<p>​                <code>}</code></p>
+<p>​            <code>}</code></p>
+<p>​        <code>}</code></p>
+<p>​    <code>}</code></p>
+<p>​    测试：单片机复位后，按下任意按键，观察屏幕。若出现相应字符，表明正确。</p>
+<p>​    问题与调试：未出现正确结果时，可先用示波器测试key,clk,data管脚，按键时key管脚：电平有高变低；clk管脚：共有16个时钟脉冲，其中前八个一组，用于HD7279A接收数据。后八个一组，用于HD7279A发送数据；data管脚：共有16个信号，前八个信号应该为00010101，及读取数据指令0x15,后八个为键码，如果按键为D，应该为0x00,及S0。在某个部分出现问题，则回到上一步骤重新测试。</p>
 
       
     </div>
@@ -583,7 +643,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单片机入门"><span class="nav-number">1.</span> <span class="nav-text">单片机入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板组成框图"><span class="nav-number">2.</span> <span class="nav-text">实验板组成框图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板焊接"><span class="nav-number">3.</span> <span class="nav-text">实验板焊接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板测试"><span class="nav-number">4.</span> <span class="nav-text">实验板测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单片机芯片测试"><span class="nav-number">4.1.</span> <span class="nav-text">单片机芯片测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HD7279A芯片的测试"><span class="nav-number">4.2.</span> <span class="nav-text">HD7279A芯片的测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QC1602A-测试"><span class="nav-number">4.3.</span> <span class="nav-text">QC1602A 测试</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单片机入门"><span class="nav-number">1.</span> <span class="nav-text">单片机入门</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板组成框图"><span class="nav-number">2.</span> <span class="nav-text">实验板组成框图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板焊接"><span class="nav-number">3.</span> <span class="nav-text">实验板焊接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实验板测试"><span class="nav-number">4.</span> <span class="nav-text">实验板测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单片机芯片测试"><span class="nav-number">4.1.</span> <span class="nav-text">单片机芯片测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HD7279A芯片的测试"><span class="nav-number">4.2.</span> <span class="nav-text">HD7279A芯片的测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QC1602A-测试"><span class="nav-number">4.3.</span> <span class="nav-text">QC1602A 测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HD7279A芯片键盘按键测试"><span class="nav-number">4.4.</span> <span class="nav-text">HD7279A芯片键盘按键测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接收HD7279A键码值"><span class="nav-number">4.5.</span> <span class="nav-text">接收HD7279A键码值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立键值码表"><span class="nav-number">4.5.1.</span> <span class="nav-text">建立键值码表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收数据测试"><span class="nav-number">4.5.2.</span> <span class="nav-text">接收数据测试</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
